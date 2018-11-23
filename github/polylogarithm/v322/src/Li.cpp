@@ -14,6 +14,7 @@
 namespace polylogarithm {
 
 namespace {
+    //等价于 1e-15
    const double epsilon = std::pow(10., -std::floor(std::numeric_limits<double>::digits10));
    const double inf = std::numeric_limits<double>::infinity();
 

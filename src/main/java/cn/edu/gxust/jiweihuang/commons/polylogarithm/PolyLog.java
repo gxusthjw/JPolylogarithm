@@ -13,21 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.edu.gxust.jiweihuang.polylog;
+package cn.edu.gxust.jiweihuang.commons.polylogarithm;
 
 import org.hipparchus.complex.Complex;
 
-/**
- * The class {@code PolyLog} is used to representing Polylogarithm for java.
- * reference: https://baike.baidu.com/item/PolyLog%E5%87%BD%E6%95%B0/9299496
- * reference: https://en.wikipedia.org/wiki/Polylogarithm
- * reference: https://github.com/Expander/polylogarithm
- */
-public abstract class PolyLog {
-    private final double epsilon = 1.0e-15;
-    private final long N = 50;
+public class PolyLog extends PolyLogBase {
+    /// expansion order
+    // public static final long N = 50;
 
-    private final double[] bernoulli = new double[]{
+    /// Bernoulli numbers B0, ..., B49
+    /// Table[BernoulliB[n], {n,0,49}]
+    public static final double[] bernoulli = new double[]{
             1, -0.5, 1. / 6., 0,
             -3.333333333333333e-02, 0, 2.380952380952381e-02, 0,
             -3.333333333333333e-02, 0, 7.575757575757576e-02, 0,
@@ -43,7 +39,9 @@ public abstract class PolyLog {
             -1.208662652229652e+23, 0
     };
 
-    private final double[] fac_inv = new double[]{
+    /// 1/n! for n = 1, ..., 50
+    /// Table[1/Factorial[n], {n,1,50}]
+    public static final double[] fac_inv = new double[]{
             1, 0.5, 1. / 6.,
             4.166666666666666e-02, 8.333333333333333e-03, 1.388888888888889e-03,
             1.984126984126984e-04, 2.480158730158730e-05, 2.755731922398589e-06,
@@ -63,43 +61,28 @@ public abstract class PolyLog {
             1.643974708316579e-63, 3.287949416633158e-65
     };
 
-    public boolean is_close(double a, double b, double eps) {
+    public static final boolean isClose(double a, double b, double eps) {
         return Math.abs(a - b) < eps;
     }
 
-    public boolean is_close(double a, double b) {
-        return is_close(a, b, epsilon);
+    public static final boolean isClose(double a, double b) {
+        return isClose(a, b, EPSILON);
     }
 
-    public boolean is_close(Complex a, Complex b, double eps) {
-        return is_close(a.getReal(), b.getReal(), eps) && is_close(a.getImaginary(), b.getImaginary(), eps);
+    public static final boolean isClose(final Complex a, final Complex b, double eps) {
+        return isClose(a.getReal(), b.getReal(), eps) && isClose(a.getImaginary(), b.getImaginary(), eps);
     }
 
-    public boolean is_close(Complex a, Complex b) {
-        return is_close(a, b, epsilon);
+    public static final boolean isClose(final Complex a, final Complex b) {
+        return isClose(a, b, EPSILON);
     }
 
-    public boolean is_even(long n) {
+    public static final boolean isEven(long n) {
         return n % 2 == 0;
     }
 
+    /// complex logarithm, converts -0.0 to 0.0
     public Complex clog(Complex z) {
         return z.log();
     }
-
-    private final int n;
-
-    public PolyLog(int n) {
-        this.n = n;
-    }
-
-    public abstract double polylog(double x);
-
-    public abstract double polylog(int n, double x);
-
-    public abstract Complex polylog(Complex x);
-
-    public abstract Complex polylog(int n, Complex x);
-
-
 }

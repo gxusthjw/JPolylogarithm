@@ -13,21 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.edu.gxust.jiweihuang.polylog;
+package cn.edu.gxust.jiweihuang.commons.polylogarithm;
 
 import org.hipparchus.complex.Complex;
 
-/**
- *
- */
-public class Polylog2 {
-    public static final double EPSILON = 1.0E-15;
-
+public class PolyLog2 extends PolyLogBase {
     /**
      * Clausen function
-     *
-     * @param x
-     * @return
      */
     public static double Cl2(double x) {
         while (x >= 2 * Math.PI) {
